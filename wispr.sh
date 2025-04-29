@@ -1,11 +1,22 @@
 #!/bin/bash
 
-# Activate virtual environment
+# Ermittle das Verzeichnis, in dem das Script liegt
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo "$SCRIPT_DIR"
+cd "$SCRIPT_DIR"
+
+# Aktiviere das virtuelle Environment
+if [ ! -d ".venv" ]; then
+  echo "Virtual environment not found! Creating one..."
+  python3 -m venv .venv
+fi
+
 source .venv/bin/activate
 
 pip list
 echo "Running the script..."
-./.venv/bin/python ./transcription_listener_offline.py # Use the venv's python explicitly
+python $SCRIPT_DIR/transcription_listener_offline.py
 echo "Script finished."
-# Optional: deactivate
-deactivate
+
+# Optional: deactivate (nicht zwingend notwendig in Scripts)
+deactivate 2>/dev/null || true

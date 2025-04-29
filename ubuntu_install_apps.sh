@@ -14,25 +14,17 @@ sudo apt-get install -y ca-certificates curl gnupg lsb-release
 
 # Offiziellen GPG-Schlüssel von Docker hinzufügen
 sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-# Repository zur APT-Quellenliste hinzufügen
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-sudo groupadd docker # Falls Gruppe noch nicht existiert
+curl -fsSL https://get.docker.com -o get-docker.sh
+ sudo sh ./get-docker.sh --dry-run
+newgrp docker
 sudo usermod -aG docker $USER
-newgrp docker # Aktiviert die Gruppenzugehörigkeit für die aktuelle Shell, oder neu einloggen
-
+sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+sudo chmod g+rwx "$HOME/.docker" -R
 ########################################################## python ######################################################
 
 # --- Install core packages ---
 sudo apt install -y python3 snapd trash-cli timeshift libfuse2 docker.io google-chrome-stable
-newgrp docker
 # --- Add user to docker group (Requires logout/login after script runs!) ---
-sudo usermod -aG docker $USER
 echo "IMPORTANT: You need to log out and log back in for Docker permissions to take effect."
 
 # --- Install snaps ---
