@@ -10,7 +10,7 @@ sudo apt upgrade -y # Add -y for non-interactive upgrades
 
 # Notwendige Pakete installieren
 sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg lsb-release
+sudo apt-get install -y ca-certificates curl gnupg lsb-release gh
 
 # Offiziellen GPG-Schlüssel von Docker hinzufügen
 sudo mkdir -p /etc/apt/keyrings
@@ -59,3 +59,5 @@ sudo apt-get install -y windsurf # Or upgrade if preferred: sudo apt-get upgrade
 echo "Script finished. Remember to log out and log back in for Docker group changes."
 
 cd ~ # Return to home directory
+
+gh auth login
